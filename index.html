@@ -3,20 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script>
-    (function() {
-      var correct = "12345";
-      var key = "ramen_auth";
-      if (sessionStorage.getItem(key) !== "ok") {
-        var pw = prompt("パスワードを入力してください");
-        if (pw === correct) {
-          sessionStorage.setItem(key, "ok");
-        } else {
-          document.documentElement.innerHTML = "<body style='background:#1a1a1a;color:#eee;font-family:serif;display:flex;height:100vh;align-items:center;justify-content:center;font-size:1.2rem;letter-spacing:0.1em;'>パスワードが違います。ページを再読み込みしてください。</body>";
-        }
-      }
-    })();
-  </script>
   <title>麺屋 龍神 | 本格醤油ラーメン</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
