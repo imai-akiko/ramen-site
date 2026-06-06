@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>麺屋 龍神 | 本格醤油ラーメン</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red: #c0392b;
+      --dark: #1a1a1a;
+      --warm: #2c1810;
+      --gold: #d4a017;
+      --cream: #fdf6e3;
+      --gray: #555;
+    }
+
+    body {
+      font-family: 'Noto Serif JP', 'Yu Mincho', '游明朝', serif;
+      background: var(--dark);
+      color: #eee;
+    }
+
+    /* ナビゲーション */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(26,26,26,0.95);
+      border-bottom: 1px solid var(--gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+    }
+
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 32px;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ヒーロー */
+    .hero {
+      height: 100vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.3em;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+      line-height: 1.2;
+    }
+
+    .hero-desc {
+      margin-top: 24px;
+      font-size: 1rem;
+      color: #ccc;
+      letter-spacing: 0.15em;
+    }
+
+    .hero-btn {
+      margin-top: 40px;
+      padding: 14px 48px;
+      background: var(--red);
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.2em;
+      font-size: 0.9rem;
+      border: 2px solid var(--red);
+      transition: all 0.3s;
+    }
+
+    .hero-btn:hover {
+      background: transparent;
+      color: var(--red);
+    }
+
+    /* セクション共通 */
+    section { padding: 100px 40px; }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: 0.25em;
+      margin-bottom: 60px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 16px auto 60px;
+    }
+
+    /* コンセプト */
+    #concept {
+      background: var(--warm);
+    }
+
+    .concept-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 2.2;
+      font-size: 1.05rem;
+      color: #ddd;
+    }
+
+    /* メニュー */
+    #menu {
+      background: var(--dark);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: #222;
+      border: 1px solid #333;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .menu-card-body {
+      padding: 24px;
+    }
+
+    .menu-card-name {
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+
+    .menu-card-desc {
+      font-size: 0.85rem;
+      color: #999;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .menu-card-price {
+      color: var(--gold);
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* こだわり */
+    #feature {
+      background: #111;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+      color: var(--gold);
+    }
+
+    .feature-text {
+      font-size: 0.85rem;
+      color: #aaa;
+      line-height: 1.9;
+    }
+
+    /* アクセス */
+    #access {
+      background: var(--warm);
+    }
+
+    .access-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .access-info table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .access-info tr {
+      border-bottom: 1px solid #444;
+    }
+
+    .access-info th,
+    .access-info td {
+      padding: 16px 8px;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .access-info th {
+      color: var(--gold);
+      width: 90px;
+      white-space: nowrap;
+    }
+
+    .access-info td { color: #ccc; line-height: 1.8; }
+
+    .map-placeholder {
+      background: #333;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      border: 1px solid #444;
+    }
+
+    /* フッター */
+    footer {
+      background: #000;
+      padding: 48px 40px;
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    .footer-logo {
+      font-size: 1.8rem;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      margin-bottom: 16px;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #555;
+      letter-spacing: 0.1em;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 80px 20px; }
+      .access-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <nav>
+    <div class="nav-logo">麺屋 龍神</div>
+    <div class="nav-links">
+      <a href="#concept">コンセプト</a>
+      <a href="#menu">メニュー</a>
+      <a href="#feature">こだわり</a>
+      <a href="#access">アクセス</a>
+    </div>
+  </nav>
+
+  <!-- ヒーロー -->
+  <section class="hero" id="top">
+    <p class="hero-sub">MENYA RYUJIN</p>
+    <h1>麺屋 龍神</h1>
+    <p class="hero-desc">一杯に、魂を込めて。</p>
+    <a href="#menu" class="hero-btn">メニューを見る</a>
+  </section>
+
+  <!-- コンセプト -->
+  <section id="concept">
+    <p class="section-label">CONCEPT</p>
+    <h2 class="section-title">味への想い</h2>
+    <div class="divider"></div>
+    <div class="concept-inner">
+      <p>
+        龍神のスープは、毎朝仕込む国産鶏ガラと厳選した昆布・煮干しを<br>
+        12時間かけてじっくり炊き上げたものです。<br><br>
+        化学調味料を一切使わず、素材の旨みだけで仕上げた黄金色の清湯。<br>
+        地元の製麺所と共同開発した自家製麺が、スープと絡み合う瞬間——<br>
+        その一口に、私たちの全てが詰まっています。
+      </p>
+    </div>
+  </section>
+
+  <!-- メニュー -->
+  <section id="menu">
+    <p class="section-label">MENU</p>
+    <h2 class="section-title">おすすめメニュー</h2>
+    <div class="divider"></div>
+    <div class="menu-grid">
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1591814468924-caf88d1232e1?w=600&q=80" alt="醤油ラーメン">
+        <div class="menu-card-body">
+          <div class="menu-card-name">特製醤油ラーメン</div>
+          <div class="menu-card-desc">鶏ガラ清湯に老舗醤油蔵の特製タレを合わせた、龍神の原点。薄切りチャーシュー2枚・メンマ・半熟煮卵付き。</div>
+          <div class="menu-card-price">¥980</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1632708660666-cd59b6945e9a?w=600&q=80" alt="味噌ラーメン">
+        <div class="menu-card-body">
+          <div class="menu-card-name">濃厚味噌ラーメン</div>
+          <div class="menu-card-desc">信州味噌をベースに複数の味噌をブレンド。豚骨スープと合わせたコク深い一杯。もやし・コーン・バター付き。</div>
+          <div class="menu-card-price">¥1,050</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&q=80" alt="塩ラーメン">
+        <div class="menu-card-body">
+          <div class="menu-card-name">鶏塩ラーメン</div>
+          <div class="menu-card-desc">澄んだスープに沖縄の天然塩を合わせたシンプルな極上品。素材の旨みを最もストレートに感じられる一杯。</div>
+          <div class="menu-card-price">¥950</div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=600&q=80" alt="つけ麺">
+        <div class="menu-card-body">
+          <div class="menu-card-name">特製つけ麺</div>
+          <div class="menu-card-desc">濃厚魚介豚骨のつけ汁に、もちもちの太麺を絡めてお召し上がりください。スープ割りサービス付き。</div>
+          <div class="menu-card-price">¥1,100</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- こだわり -->
+  <section id="feature">
+    <p class="section-label">OUR COMMITMENT</p>
+    <h2 class="section-title">龍神のこだわり</h2>
+    <div class="divider"></div>
+    <div class="feature-grid">
+      <div>
+        <div class="feature-icon">🍜</div>
+        <div class="feature-title">自家製麺</div>
+        <div class="feature-text">地元製麺所と共同開発。小麦の配合・加水率・熟成時間にこだわり抜いた麺。</div>
+      </div>
+      <div>
+        <div class="feature-icon">🐓</div>
+        <div class="feature-title">無添加スープ</div>
+        <div class="feature-text">化学調味料ゼロ。毎朝仕込む国産鶏ガラと昆布を12時間炊き込んだ清湯。</div>
+      </div>
+      <div>
+        <div class="feature-icon">🥚</div>
+        <div class="feature-title">特製チャーシュー</div>
+        <div class="feature-text">低温調理でしっとり仕上げた豚肩ロース。秘伝のタレで12時間漬け込み。</div>
+      </div>
+      <div>
+        <div class="feature-icon">🌾</div>
+        <div class="feature-title">地産地消</div>
+        <div class="feature-text">野菜・卵・味噌など、できる限り地元の生産者から直接仕入れています。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- アクセス -->
+  <section id="access">
+    <p class="section-label">ACCESS</p>
+    <h2 class="section-title">店舗情報</h2>
+    <div class="divider"></div>
+    <div class="access-inner">
+      <div class="access-info">
+        <table>
+          <tr>
+            <th>店名</th>
+            <td>麺屋 龍神</td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td>〒130-0021<br>東京都墨田区緑橋町3-7-12</td>
+          </tr>
+          <tr>
+            <th>電話</th>
+            <td>03-5678-9012</td>
+          </tr>
+          <tr>
+            <th>営業時間</th>
+            <td>
+              [平日] 11:30〜14:30 / 18:00〜22:00<br>
+              [土日祝] 11:00〜21:00
+            </td>
+          </tr>
+          <tr>
+            <th>定休日</th>
+            <td>火曜日</td>
+          </tr>
+          <tr>
+            <th>アクセス</th>
+            <td>都営浅草線「緑橋駅」A2出口 徒歩4分</td>
+          </tr>
+        </table>
+      </div>
+      <div class="map-placeholder">
+        ここにGoogle Mapを埋め込み
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-logo">麺屋 龍神</div>
+    <p class="footer-copy">© 2026 麺屋 龍神 All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
